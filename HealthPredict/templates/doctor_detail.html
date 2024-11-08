@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .profile-card p {
+            margin: 10px 0;
+        }
+        .profile-card strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Doctor Profile</h2>
+<div class="profile-card">
+    <p><strong>Name:</strong> {{ doctor.name }}</p>
+    <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+    <p><strong>Experience:</strong> {{ doctor.experience }} years</p>
+    <p><strong>Contact:</strong> {{ doctor.contact }}</p>
+    <p><strong>Email:</strong> {{ doctor.email }}</p>
+    <p><strong>Clinic Address:</strong> {{ doctor.clinic_address }}</p>
+</div>
+
+</body>
+</html>

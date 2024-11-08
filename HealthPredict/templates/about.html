@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <title>DentaCare - Free Bootstrap 4 Template by Colorlib</title>
+    <title>HealthPredict-Personalized Healthcare Solutions</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,11 +39,21 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="{% url 'doctor' %}" class="nav-link">Doctor</a></li>
-                    <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
-                <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal"
-                                            data-target="#modalRequest"><span>Make an Appointment</span></a></li>
+            <li class="nav-item active"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+	        <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+	        <li class="nav-item"><a href="{% url 'symptomChecker' %}" class="nav-link">Symptom Checker</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="doctorsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Doctors
+                </a>
+                <div class="dropdown-menu" aria-labelledby="doctorsDropdown">
+                    <a class="dropdown-item" href="{% url 'doctor_list' %}">View Doctors</a>
+                    <a class="dropdown-item" href="{% url 'add_doctor' %}">Add Doctor</a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+            <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link"><span>Login/Register</span></a></li>
+            <!-- <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Make an Appointment</span></a></li> -->
             </ul>
         </div>
     </div>
@@ -95,36 +105,28 @@
                             <div class="tab-pane fade show active" id="v-pills-whatwedo" role="tabpanel"
                                  aria-labelledby="v-pills-whatwedo-tab">
                                 <div>
-                                    <h2 class="mb-4">We Offer High Quality Services</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                                        right at the coast of the Semantics, a large language ocean.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt voluptate,
-                                        quibusdam sunt iste dolores consequatur</p>
+                                    <h2 class="mb-4">Personalized Healthcare at Your Fingertips</h2>
+                                    <p>HealthPredict provides a cutting-edge solution that empowers individuals to manage their health proactively. By leveraging advanced data science and machine learning algorithms, our platform predicts the top 10 diseases a user might be at risk of, based on their unique health profile, lifestyle, and medical history. This prediction model helps users stay informed about potential health issues and take preventive measures before symptoms arise. Each disease prediction is accompanied by detailed descriptions, giving users a comprehensive understanding of possible risk factors and conditions.</p>
+
+                                    <p>We also simplify the healthcare process by allowing users to book doctor appointments directly through our platform. Our AI-driven chatbot offers 24/7 support, assisting with basic health queries and guiding users through their healthcare journey.</p>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-mission" role="tabpanel"
                                  aria-labelledby="v-pills-mission-tab">
                                 <div>
-                                    <h2 class="mb-4">To Accomodate All Patients</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                                        right at the coast of the Semantics, a large language ocean.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt voluptate,
-                                        quibusdam sunt iste dolores consequatur</p>
+                                    <h2 class="mb-4">Empowering Individuals Through Preventive Healthcare</h2>
+                                    <p>At HealthPredict, our mission is to empower individuals with personalized, data-driven health insights. We aim to make preventive healthcare accessible, helping users understand their health risks and take action before issues arise.</p>
+                                    <p>By leveraging technology, we strive to bridge the gap between reactive treatment and proactive care. Our commitment is to provide users with the tools they need to make informed, healthier decisions for their future.</p>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-goal" role="tabpanel"
                                  aria-labelledby="v-pills-goal-tab">
                                 <div>
-                                    <h2 class="mb-4">Help Our Customers Needs</h2>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                                        right at the coast of the Semantics, a large language ocean.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt voluptate,
-                                        quibusdam sunt iste dolores consequatur</p>
+                                    <h2 class="mb-4">A Vision for the Future of Healthcare</h2>
+                                    <p>Our goal is to empower proactive healthcare management by offering disease risk predictions and seamless access to medical professionals. We aim to expand our services and refine our AI models for better accuracy and user experience.</p>
+                                    <p>We aspire to make personalized healthcare a reality for all by providing accessible, actionable health insights and recommendations, ensuring individuals can take charge of their well-being with confidence.</p>
                                 </div>
                             </div>
                         </div>
@@ -140,9 +142,8 @@
         <div class="row mb-5">
             <div class="col-md-3">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">DentaCare.</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
-                        live the blind texts.</p>
+                    <h2 class="ftco-heading-2">HealthPredict</h2>
+                    <p>Carried on the breeze of personalized care, we lift you toward a horizon of wellness and vitality.</p>
                 </div>
                 <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
                     <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
@@ -168,7 +169,7 @@
                     <div class="block-21 mb-4 d-flex">
                         <a class="blog-img mr-4" style="background-image: url('{% static "images/image_1.jpg" %}');"></a>
                         <div class="text">
-                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                            <h3 class="heading"><a href="#">In a digital age, how can AI help you live your healthiest life?</a></h3>
                             <div class="meta">
                                 <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                                 <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -179,7 +180,7 @@
                     <div class="block-21 mb-4 d-flex">
                         <a class="blog-img mr-4" style="background-image: url('{% static "images/image_2.jpg" %}');"></a>
                         <div class="text">
-                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                            <h3 class="heading"><a href="#">Every health journey is unique, and it starts with the first step—are you ready to take yours?</a></h3>
                             <div class="meta">
                                 <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                                 <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -197,8 +198,8 @@
                             <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span>
                             </li>
                             <li><a href="#"><span class="icon icon-phone"></span><span
-                                    class="text">+2 392 3929 210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a>
+                                    class="text">+91 9456342450</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">service@healthpredict.com</span></a>
                             </li>
                         </ul>
                     </div>
@@ -209,9 +210,9 @@
             <div class="col-md-12 text-center">
 
                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                    All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script> -->
+                    <!-- All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a -->
+                            <!-- href="https://colorlib.com" target="_blank">Colorlib</a> -->
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
             </div>
         </div>

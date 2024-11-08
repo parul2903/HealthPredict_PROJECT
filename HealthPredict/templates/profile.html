@@ -1,75 +1,734 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DentaCare - Register</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .sidebar {
+            background-color: #333;
+            width: 250px;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+       /* Sidebar Button Styling */
+        .sidebar-nav {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #3498db;
+            padding: 10px 20px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .sidebar-btn i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Hover Effect */
+        .sidebar-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* Sidebar Button Active State */
+        .sidebar-btn:active {
+            background-color: #1e6f93;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            flex-direction: column;
+        }
+        .character {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .user-title {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00c6ff;
+            text-align: center;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .kpi {
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .kpi-value {
+            font-weight: bold;
+            font-size: 2em;
+            color: #007bff;
+            text-align: center;
+        }
+        .info-card {
+            background-color: #444;
+            color: white;
+            width: 100%;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Button to trigger data update modal */
+        .update-data-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0;
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+        }
+
+       /* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Modal Header */
+.modal-header {
+    font-size: 1.6em;
+    color: #00c6ff;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 1.6em;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+label {
+    font-size: 1em;
+    color: #b3b3b3;
+    margin-bottom: 8px;
+}
+
+/* Input Fields */
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background-color: #333;
+    color: #ffffff;
+    font-size: 1.1em;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Input Field Focus */
+input[type="number"]:focus,
+select:focus {
+    border-color: #00c6ff;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00c6ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover */
+.submit-btn:hover {
+    background-color: #007bbf;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.chart-card {
+    height: 350px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevents content from overflowing the card */
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Canvas for Charts */
+.chart-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    height: 300px; /* Adjust based on card height */
+    width: auto;
+}
+
+/* Specific Styling for Pie Chart Canvas */
+.pie-chart-canvas {
+    width: 250px;  /* Adjust to fit better within card */
+    height: 250px;
+    max-width: 90%;  /* Prevents overflow even further */
+    max-height: 90%;
+}
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+
+
+    <!-- Sidebar with Gender, Weight, Age -->
+    <div class="sidebar">
+        <div class="header">
+            <img src="https://i.ibb.co/9gRJ0Lk/cat-main-removebg-preview.png" alt="Animated Character" class="character">
+            <div class="user-title">{{ user.username }}'s Dashboard</div>
+        </div>
+        
+        <a class="sidebar-btn" id="openModalBtn">
+            <i class="fas fa-edit"></i> Update Data
+        </a>
+
+        <div class="info-card">
+            <p><strong>Gender:</strong> {{ user.userprofile.gender }}</p>
+        </div>
+        <div class="info-card">
+            <p><strong>Weight:</strong> {{ user.userprofile.height }}</p>
+        </div>
+        <div class="info-card">
+            <p><strong>Age:</strong> {{ user.userprofile.age }}</p>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li>
+                <a href="{% url 'home' %}" class="sidebar-btn">
+                    <i class="fas fa-home"></i> Go to Home
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'symptomChecker' %}" class="sidebar-btn">
+                    <i class="fas fa-stethoscope"></i> Go to Symptom Checker
+                </a>
+            </li>
+            <!-- Logout Button -->
+            <li>
+                <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        <p><strong>Phone:</strong> <input type="text" name="phone" value="{{ user_data.phone }}" required></p>
+        <p><strong>Address:</strong> <input type="text" name="address" value="{{ user_data.address }}" required></p>
+        <p><strong>Gender:</strong> 
+            <select name="gender" required>
+                <option value="male" {% if user_data.gender == 'male' %}selected{% endif %}>Male</option>
+                <option value="female" {% if user_data.gender == 'female' %}selected{% endif %}>Female</option>
+                <option value="other" {% if user_data.gender == 'other' %}selected{% endif %}>Other</option>
+            </select>
+        </p>
+        <p><strong>Weight:</strong> <input type="number" name="weight" value="{{ user_data.weight }}" required></p>
+        <p><strong>Age:</strong> <input type="number" name="age" value="{{ user_data.age }}" required></p>
+        <button type="submit">Update</button>
+    </form> -->
+
+    <!-- Main Content -->
+    <div style="flex: 1;">
+        <h1 style="color: black;">User Dashboard</h1>
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Health<span>Predict</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="{% url 'doctor' %}" class="nav-link">Doctors</a></li>
-                    <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
-                    <li class="nav-item active"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
-                    <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Make an Appointment</span></a></li>
+            <!-- User Details Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">User Details</span>
+                    <i class="fas fa-user"></i>
+                </div>
+                <p><strong>Name:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone:</strong> {{ user.phone }}</p>
+                <p><strong>Address:</strong> {{ user.address }}</p>
+            </div>
+
+            <!-- Appointments Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Appointments</span>
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <ul>
+                    {% for appointment in appointments %}
+                    <li><strong>Doctor:</strong> {{ appointment.doctor }}<br>
+                    <strong>Date:</strong> {{ appointment.date }} at {{ appointment.time }}<br></li>
+                    {% empty %}
+                        <p>No upcoming appointments.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Symptom Checker Predictions Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Symptom Checker</span>
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <p><strong>Symptoms Checker Results:</strong></p>
+                <ul>
+                    {% for record in symptoms %}
+                        <li>
+                        <strong>Disease:</strong> {{ record.predicted_disease }}<br>
+                        <strong>Description:</strong> {{ record.description }}<br>
+                        <strong>Symptoms:</strong> {{ record.symptoms }}<br>
+                    </li>
+                        <!-- <small>Checked on: {{ record.created_at }}</small> -->
+                {% empty %}
+                    <p>No symptom checker results available.</p>
+                {% endfor %}
                 </ul>
             </div>
         </div>
-    </nav>
-    <!-- END nav -->
 
-    <section class="ftco-section contact-section ftco-degree-bg">
+        <!-- KPI Cards -->
         <div class="container">
-            <div class="row d-flex mb-5 contact-info">
-                <div class="col-md-12 mb-4">
-                    <h2 class="h4">Profile</h2>
-                </div>
+            <div class="card">
+                <div class="kpi">Upcoming Appointments</div>
+                <div class="kpi-value">{{ upcoming_appointments }}</div>
             </div>
-            <div class="row block-9">
-                <div class="col-md-6 pr-md-5">
-                    <form action="{% url 'register' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Your Username" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
-                        </div>
-                    </form>
-                    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-                </div>
-                <div class="col-md-6">
-                    <img src="{% static 'images/healthcare.jpg' %}" alt="Healthcare" class="img-fluid">
-                </div>
+            <div class="card">
+                <div class="kpi">Symptom Severity Index</div>
+                <div class="kpi-value">5</div>
+            </div>
+            <div class="card">
+                <div class="kpi">Health Improvement</div>
+                <div class="kpi-value">15%</div>
             </div>
         </div>
-    </section>
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+     <!-- Charts Section -->
+<div class="charts-container">
+    <!-- Chart 1: Exercise Frequency -->
+    <div class="card chart-card">
+        <div class="card-header">
+            <span class="card-title">Exercise Frequency Over Time</span>
+        </div>
+        <div class="card-body">
+            <canvas id="exerciseFrequencyChart" class="chart-canvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 2: Diet Quality (Pie Chart) -->
+    <div class="card chart-card">
+        <div class="card-header">
+            <span class="card-title">Diet Quality Distribution</span>
+        </div>
+        <div class="card-body">
+            <canvas id="dietQualityChart" class="chart-canvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 3: Sleep Hours -->
+    <div class="card chart-card">
+        <div class="card-header">
+            <span class="card-title">Sleep Hours Over Time</span>
+        </div>
+        <div class="card-body">
+            <canvas id="sleepHoursChart" class="chart-canvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 4: Appointment Feedback -->
+    <div class="card chart-card">
+        <div class="card-header">
+            <span class="card-title">Appointment Feedback</span>
+        </div>
+        <div class="card-body">
+            <canvas id="appointmentFeedbackChart" class="pie-chart-canvas"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Update Data Modal -->
+<form method="post" action="{% url 'update_profile_data' %}">
+    {% csrf_token %}
+    <div id="updateDataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Update Your Data</span>
+                <span class="close-btn" id="closeModalBtn">&times;</span>
+            </div>
+            
+            <!-- New Fields at the Top
+            <div class="form-group">
+                <label for="nameInput">Name:</label>
+                <input type="text" name="name" id="nameInput" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneInput">Phone Number:</label>
+                <input type="tel" name="phone" id="phoneInput" required>
+            </div>
+            <div class="form-group">
+                <label for="addressInput">Address:</label>
+                <input type="text" name="address" id="addressInput" required>
+            </div>
+            <div class="form-group">
+                <label for="genderInput">Gender:</label>
+                <select name="gender" id="genderInput" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer_not_to_say">Prefer Not to Say</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="weightInput">Weight (kg):</label>
+                <input type="number" name="weight" id="weightInput" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="ageInput">Age:</label>
+                <input type="number" name="age" id="ageInput" min="1" required>
+            </div> -->
+            
+            <!-- Existing Fields -->
+            <div class="form-group">
+                <label for="exerciseFrequencyInput">Exercise Frequency (Days):</label>
+                <input type="number" name="exercise_frequency" id="exerciseFrequencyInput" min="1" max="7" required>
+            </div>
+            <div class="form-group">
+                <label for="dietQualityInput">Diet Quality (1–5):</label>
+                <input type="number" name="diet_quality" id="dietQualityInput" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="sleepHoursInput">Sleep Hours:</label>
+                <input type="number" name="sleep_hours" id="sleepHoursInput" min="1" max="24" required>
+            </div>
+            <div class="form-group">
+                <label for="appointmentFeedbackInput">Appointment Feedback:</label>
+                <select name="appointment_feedback" id="appointmentFeedbackInput" required>
+                    <option value="helpful">Helpful</option>
+                    <option value="somewhat helpful">Somewhat Helpful</option>
+                    <option value="not helpful">Not Helpful</option>
+                </select>
+            </div>
+            
+            <button class="submit-btn" type="submit" id="submitDataBtn">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+    <script>
+        // Sample Data
+        let sampleData = [
+            { "created_at": "2024-11-01", "exercise_frequency": 3, "diet_quality": 4, "sleep_hours": 7, "appointment_feedback": "helpful" },
+            { "created_at": "2024-11-02", "exercise_frequency": 5, "diet_quality": 5, "sleep_hours": 8, "appointment_feedback": "somewhat helpful" },
+            { "created_at": "2024-11-03", "exercise_frequency": 2, "diet_quality": 3, "sleep_hours": 6, "appointment_feedback": "not helpful" },
+            { "created_at": "2024-11-04", "exercise_frequency": 4, "diet_quality": 4, "sleep_hours": 7, "appointment_feedback": "helpful" },
+            { "created_at": "2024-11-05", "exercise_frequency": 6, "diet_quality": 2, "sleep_hours": 5, "appointment_feedback": "not helpful" },
+            { "created_at": "2024-11-06", "exercise_frequency": 3, "diet_quality": 4, "sleep_hours": 6, "appointment_feedback": "helpful" },
+        ];
+
+        // Define chart variables globally
+        let exerciseFrequencyChart, dietQualityChart, sleepHoursChart, appointmentFeedbackChart;
+
+        // Function to update the charts with new data
+        function updateCharts() {
+            const dates = sampleData.map(item => item.created_at);
+            const exerciseFrequency = sampleData.map(item => item.exercise_frequency);
+            const dietQuality = sampleData.map(item => item.diet_quality);
+            const sleepHours = sampleData.map(item => item.sleep_hours);
+            const feedbackLabels = ["helpful", "somewhat helpful", "not helpful"];
+            const feedbackCount = feedbackLabels.map(label => sampleData.filter(item => item.appointment_feedback === label).length);
+
+            // If charts are already initialized, destroy them first
+            if (exerciseFrequencyChart) exerciseFrequencyChart.destroy();
+            if (dietQualityChart) dietQualityChart.destroy();
+            if (sleepHoursChart) sleepHoursChart.destroy();
+            if (appointmentFeedbackChart) appointmentFeedbackChart.destroy();
+
+            // Exercise Frequency Chart
+            const ctx1 = document.getElementById('exerciseFrequencyChart').getContext('2d');
+            exerciseFrequencyChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Exercise Frequency (Days)',
+                        data: exerciseFrequency,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: 'Date' } },
+                        y: { title: { display: true, text: 'Exercise Frequency' } }
+                    }
+                }
+            });
+
+            // Diet Quality Chart
+            const ctx2 = document.getElementById('dietQualityChart').getContext('2d');
+            dietQualityChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['1', '2', '3', '4', '5'],
+                    datasets: [{
+                        label: 'Diet Quality Distribution',
+                        data: [dietQuality.filter(d => d === 1).length, dietQuality.filter(d => d === 2).length, dietQuality.filter(d => d === 3).length, dietQuality.filter(d => d === 4).length, dietQuality.filter(d => d === 5).length],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: 'Diet Quality (1–5)' } },
+                        y: { title: { display: true, text: 'Count' } }
+                    }
+                }
+            });
+
+            // Sleep Hours Chart
+            const ctx3 = document.getElementById('sleepHoursChart').getContext('2d');
+            sleepHoursChart = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Sleep Hours (per night)',
+                        data: sleepHours,
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: 'Date' } },
+                        y: { title: { display: true, text: 'Sleep Hours' } }
+                    }
+                }
+            });
+
+            // Appointment Feedback Chart (Pie Chart)
+            const ctx4 = document.getElementById('appointmentFeedbackChart').getContext('2d');
+            appointmentFeedbackChart = new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: feedbackLabels,
+                    datasets: [{
+                        data: feedbackCount,
+                        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)'],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Event listener to open the modal
+        document.getElementById('openModalBtn').addEventListener('click', () => {
+            document.getElementById('updateDataModal').style.display = 'block';
+        });
+
+        // Event listener to close the modal
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            document.getElementById('updateDataModal').style.display = 'none';
+        });
+// Handle data submission
+document.getElementById('submitDataBtn').addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent form submission to handle manually
+        
+        // Get values from the form
+        const exerciseFrequency = parseInt(document.getElementById('exerciseFrequencyInput').value);
+        const dietQuality = parseInt(document.getElementById('dietQualityInput').value);
+        const sleepHours = parseInt(document.getElementById('sleepHoursInput').value);
+        const appointmentFeedback = document.getElementById('appointmentFeedbackInput').value;
+
+            // Remove the first entry and add the new one
+            sampleData.shift();
+            sampleData.push({
+                created_at: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+                exercise_frequency: exerciseFrequency,
+                diet_quality: dietQuality,
+                sleep_hours: sleepHours,
+                appointment_feedback: appointmentFeedback
+            });
+
+            // Close the modal and update the charts
+            document.getElementById('updateDataModal').style.display = 'none';
+            updateCharts();
+        });
+
+        // Initial chart rendering
+        updateCharts();
+    </script>
+
+<!-- <script>
+    // Function to update user data after symptom checker
+    function updateUserData(age, gender) {
+        // Send updated age and gender to the backend
+        $.ajax({
+            url: '{% url "save_user_details" %}',  // Ensure you use the correct URL pattern
+            method: 'POST',
+            data: {
+                'age': age,
+                'gender': gender,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                // Update the dashboard UI with new data
+                if (response.status === 'success') {
+                    document.querySelector('.info-card p strong:contains("Gender:")').nextSibling.textContent = response.gender;
+                    document.querySelector('.info-card p strong:contains("Age:")').nextSibling.textContent = response.age;
+                }
+            }
+        });
+    } -->
+
+    <!-- // Example: Call this function with new data after symptom checker is completed
+    // updateUserData(newAge, newGender); -->
+</script>
+
+
 </body>
 </html>
-
-

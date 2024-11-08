@@ -27,6 +27,41 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>/* Styling for Profile Button */
+      .navbar .nav-item .profile-btn {
+          background-color: #28a745; /* Green background */
+          color: white;
+          border-radius: 5px;
+          padding: 8px 15px;
+          transition: background-color 0.3s ease;
+      }
+      
+      .navbar .nav-item .profile-btn:hover {
+          background-color: #218838; /* Darker green on hover */
+      }
+      
+      /* Styling for Logout Button */
+      .navbar .nav-item .logout-btn {
+          background-color: #dc3545; /* Red background */
+          color: white;
+          border-radius: 5px;
+          padding: 8px 15px;
+          margin-left: 10px; /* Space between Profile and Logout */
+          transition: background-color 0.3s ease;
+      }
+      
+      .navbar .nav-item .logout-btn:hover {
+          background-color: #c82333; /* Darker red on hover */
+      }
+
+      .select-wrap select,
+.select-wrap select option {
+    color: black;
+}
+}
+      </style>
+    
   </head>
   <body>
     
@@ -39,53 +74,85 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
 	         <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="{% url 'doctor' %}" class="nav-link">Symptom Checker</a></li>
+	          <li class="nav-item"><a href="{% url 'symptomChecker' %}" class="nav-link">Symptom Checker</a></li>
+            <!-- Doctors Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="doctorsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Doctors
+              </a>
+              <div class="dropdown-menu" aria-labelledby="doctorsDropdown">
+                  <a class="dropdown-item" href="{% url 'doctor_list' %}">View Doctors</a>
+                  <a class="dropdown-item" href="{% url 'add_doctor' %}">Add Doctor</a>
+              </div>
+          </li>
+          <!-- End Doctors Dropdown -->
             <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
-            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">loogin</a></li>
-            <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Login/Register</span></a></li>
+            <!-- <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link"><span>Login/Register</span></a></li> -->
+
+            {% if user.is_authenticated %}
+            <!-- Profile and Logout Buttons -->
+            <li class="nav-item">
+                <a href="{% url 'profile' %}" class="nav-link profile-btn">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link logout-btn">Logout</a>
+            </li>
+        {% else %}
+            <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link"><span>Login/Register</span></a></li>
+        {% endif %}
+            
+            <!-- <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Login/Register</span></a></li> -->
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
     <!-- END nav -->
 
-    <section class="home-slider owl-carousel">
-          <div class="slider-item" style="background-image: url('{% static "images/bg_1.jpg" %}');">
+    <!-- <div class="navigation">
+      <a href="{% url 'doctor_list' %}" class="btn btn-primary">View Doctors</a>
+      <a href="{% url 'add_doctor' %}" class="btn btn-success">Add Doctor</a>
+  </div> -->
+  <section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url('{% static "images/bg_1.jpg" %}');">
         <div class="overlay"></div>
         <div class="container">
-          <div class="row slider-text align-items-center" data-scrollax-parent="true">
-            <div class="col-md-6 col-sm-12 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-              <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Personalized Healthcare for a Healthier Tomorrow</h1>
-              <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Empowering you with tailored health insights based on advanced machine learning models</p>
-              <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><a href="#" class="btn btn-primary px-4 py-3">Get S</a></p>
+            <div class="row slider-text align-items-center" data-scrollax-parent="true">
+                <div class="col-md-6 col-sm-12 ftco-animate" data-scrollax="properties: { translateY: '70%' }">
+                    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Personalized Healthcare for a Healthier Tomorrow</h1>
+                    <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Empowering you with tailored health insights based on advanced machine learning models</p>
+                    <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                        <a href="{% url 'login' %}" class="btn btn-primary px-4 py-3">Login/Register</a>
+                    </p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
-       <div class="slider-item" style="background-image: url('{% static "images/bg_2.jpg" %}');">
+    <div class="slider-item" style="background-image: url('{% static "images/bg_2.jpg" %}');">
         <div class="overlay"></div>
         <div class="container">
-          <div class="row slider-text align-items-center" data-scrollax-parent="true">
-            <div class="col-md-6 col-sm-12 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-              <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Modern Care for Your Perfect Path to Wellness</h1>
-              <p class="mb-4">Using data-driven insights to provide personalized treatment plans that work for you.</p>
-              <p><a href="#" class="btn btn-primary px-4 py-3">Make an Appointment</a></p>
+            <div class="row slider-text align-items-center" data-scrollax-parent="true">
+                <div class="col-md-6 col-sm-12 ftco-animate" data-scrollax="properties: { translateY: '70%' }">
+                    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Modern Care for Your Perfect Path to Wellness</h1>
+                    <p class="mb-4">Using data-driven insights to provide personalized treatment plans that work for you.</p>
+                    <p>
+                        <a href="{% url 'login' %}" class="btn btn-primary px-4 py-3">Login/Register</a>
+                    </p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
     <section class="ftco-intro">
     	<div class="container">
     		<div class="row no-gutters">
     			<div class="col-md-3 color-1 p-4">
     				<h3 class="mb-4">Emergency Cases</h3>
-    				<p>Modern Achieve Your Desired Perfect Smile</p>
-    				<span class="phone-number">+ (123) 456 7890</span>
+    				<p>Contact</p>
+    				<span class="phone-number">+91 9456342450</span>
     			</div>
     			<div class="col-md-3 color-2 p-4">
     				<h3 class="mb-4">Opening Hours</h3>
@@ -104,18 +171,23 @@
     			</div>
     			<div class="col-md-6 color-3 p-4">
     				<h3 class="mb-2">Make an Appointment</h3>
-    				<form action="#" class="appointment-form">
+            <form id="appointment-form" method="post" class="appointment-form" action="{% url 'make_appointment' %}">
+              {% csrf_token %}
+    				<!-- <form action="#" class="appointment-form"> -->
 	            <div class="row">
 	            	<div class="col-sm-4">
 	                <div class="form-group">
 			              <div class="select-wrap">
                       <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                      <select name="" id="" class="form-control">
-                      	<option value="">Department</option>
-                        <option value="">Personalized Risk Assessments</option>
-                        <option value="">Tailored Treatment Plans</option>
-                        <option value="">Interactive Health Dashboards</option>
-                        <option value="">Advanced Symptom Checker</option>
+                      <select name="doctor" id="" class="form-control">
+                      	<option value="" style="color: black;">Doctors</option>
+                        <option value="Dr. Emily Carter" style="color: black;">Dr. Emily Carter</option>
+                        <option value="Dr. Michael Patel" style="color: black;">Dr. Michael Patel</option>
+                        <option value="Dr. David Johnson" style="color: black;">Dr. David Johnson</option>
+                        <option value="Dr. Ava Thompson" style="color: black;">Dr. Evan Thompson</option>
+                        <option value="Dr. Arvind Gupta" style="color: black;">Dr. Arvind Gupta</option>
+                        <option value="Dr. Dilip Chaurasiya" style="color: black;">Dr. Dilip Chaurasiya</option>
+                        
                       </select>
                     </div>
 			            </div>
@@ -123,13 +195,13 @@
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="icon-user"></span></div>
-			              <input type="text" class="form-control" id="appointment_name" placeholder="Name">
+			              <input type="text" name="name" class="form-control" placeholder="Name">
 			            </div>
 	              </div>
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="icon-paper-plane"></span></div>
-			              <input type="text" class="form-control" id="appointment_email" placeholder="Email">
+			              <input type="email" name="email" class="form-control" placeholder="Email">
 			            </div>
 	              </div>
 	            </div>
@@ -137,19 +209,19 @@
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="ion-ios-calendar"></span></div>
-	                  <input type="text" class="form-control appointment_date" placeholder="Date">
+	                  <input type="date" name = "date" class="form-control" placeholder="Date">
 	                </div>    
 	              </div>
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="ion-ios-clock"></span></div>
-	                  <input type="text" class="form-control appointment_time" placeholder="Time">
+	                  <input type="time" name="time" class="form-control" placeholder="Time">
 	                </div>
 	              </div>
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="icon-phone2"></span></div>
-	                  <input type="text" class="form-control" id="phone" placeholder="Phone">
+	                  <input type="text" name="phone" class="form-control" placeholder="Phone">
 	                </div>
 	              </div>
 	            </div>
@@ -158,10 +230,81 @@
 	              <input type="submit" value="Make an Appointment" class="btn btn-primary">
 	            </div>
 	          </form>
-    			</div>
-    		</div>
-    	</div>
-    </section>
+
+<!-- Bootstrap modal for appointment success message -->
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="appointmentModalLabel">Appointment Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong style="color: #333;">Your appointment is successfully booked!</strong>
+        <p><strong style="color: #333;">Details:</strong></p>
+        <ul style="list-style-type: none; padding-left: 0; color: #333;">
+            <li id="modalDoctor"></li>
+            <li id="modalDate"></li>
+            <li id="modalTime"></li>
+            <li id="modalName"></li>
+            <li id="modalEmail"></li>
+            <li id="modalPhone"></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Include Bootstrap JS and jQuery for AJAX and modal functionality -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://widget.cxgenie.ai/widget.js" data-aid="1d7c4b57-b1f7-4a4a-98a5-63de0dbdfcd4" data-lang="en"></script>
+
+<script>
+$(document).ready(function () {
+    $('#appointment-form').submit(function (event) {
+        event.preventDefault();  // Prevent the form from submitting normally
+        var formData = $(this).serialize();  // Serialize the form data
+
+        $.ajax({
+            url: "{% url 'make_appointment' %}",
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                console.log(response);  // Debugging: check the response data
+                if (response.doctor && response.name && response.date && response.time && response.email && response.phone) {
+                    $('#modalDoctor').text('Doctor: ' + response.doctor);
+                    $('#modalName').text('Name: ' + response.name);
+                    $('#modalDate').text('Date: ' + response.date);
+                    $('#modalTime').text('Time: ' + response.time);
+                    $('#modalEmail').text('Email: ' + response.email);
+                    $('#modalPhone').text('Phone: ' + response.phone);
+                    
+                    // Display the modal
+                    $('#appointmentModal').modal('show');
+                } else {
+                    alert('Some data is missing. Please check the form and try again.');
+                }
+            },
+            error: function (response) {
+                alert('There was an error processing your appointment. Please try again.');
+            }
+        });
+    });
+});
+
+</script>
+
   
     <section class="ftco-section ftco-services">
       <div class="container">
@@ -212,7 +355,7 @@
               </div>
               <div class="media-body p-2 mt-3">
                 <h3 class="heading">Symptom Checker</h3>
-                <p>Our cutting-edge Symptom Checker uses Natural Language Processing (NLP) to help you identify possible conditions based on your symptoms, providing you with relevant health insights and next steps.</p>
+                <p>Our cutting-edge Symptom Checker uses Machine Learning (ML) to help you identify possible conditions based on your symptoms, providing you with relevant health insights and next steps.</p>
               </div>
             </div>      
           </div>
@@ -220,7 +363,7 @@
       </div>
       <div class="container-wrap mt-5">
       	<div class="row d-flex no-gutters">
-      		<div class="col-md-6 img" style="background-image: url('{% static "images/about-2.jpg" %}');">
+      		<div class="col-md-6 img" style="background-image: url('{% static "images/chatbot.jpeg" %}');">
       		</div>
       		<div class="col-md-6 d-flex">
       			<div class="about-wrap">
@@ -266,19 +409,19 @@
       <div class="container">
       	<div class="row justify-content-center mb-5 pb-5">
           <div class="col-md-7 text-center heading-section ftco-animate">
-            <h2 class="mb-3">Meet Our Experienced Bot</h2>
-            <p>HealthPredict carries you on the breeze of personalized care, lifting you toward a horizon of health.</p>
+            <h2 class="mb-3">Meet Our Experienced Doctors</h2>
+            <p>"At HealthPredict, we guide you gently on the path of wellness, embracing you with personalized care as you journey toward a brighter, healthier tomorrow."</p>
           </div>
         </div>
         <div class="row">
         	<div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-      				<div class="img mb-4" style="background-image: url('{% static "images/person_5.jpg" %}');"></div>
+      				<div class="img mb-4" style="background-image: url('{% static "images/evan.jpeg" %}');"></div>
       				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Tom Smith</a></h3>
-      					<span class="position">Dentist</span>
+      					<h3><a href="teacher-single.html">Evan Thompson</a></h3>
+      					<span class="position">Cardiologist</span>
       					<div class="text">
-	        				<p>Far far away, behind the word mountains, far from the countries Vokalia</p>
+	        				<p>Specializes in diagnosing and treating heart and cardiovascular conditions, such as heart disease, hypertension, and arrhythmias. They provide both preventive care and advanced treatments for heart-related issues.</p>
 	        				<ul class="ftco-social">
 			              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 			              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -290,12 +433,12 @@
         		</div>
         	</div><div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-                   <div class="img mb-4" style="background-image: url('{% static "images/person_6.jpg" %}');"></div>
+                   <div class="img mb-4" style="background-image: url('{% static "images/david.jpeg" %}');"></div>
       				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Personalized Care Consultants</a></h3>
-      					<span class="position">Advanced Machine Learning Specialists</span>
+      					<h3><a href="teacher-single.html">David Johnson</a></h3>
+      					<span class="position">Neurologist </span>
       					<div class="text">
-	        				<p>Harnessing the power of AI, our specialists develop sophisticated models to predict health risks and guide you towards proactive, personalized care.</p>
+	        				<p>Focuses on disorders of the nervous system, including the brain, spinal cord, and nerves. They treat conditions like epilepsy, stroke, multiple sclerosis, and migraines.</p>
 	        				<ul class="ftco-social">
 			              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 			              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -308,12 +451,12 @@
         	</div>
         	<div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-                   <div class="img mb-4" style="background-image: url('{% static "images/person_7.jpg" %}');"></div>
+                   <div class="img mb-4" style="background-image: url('{% static "images/emily.jpeg" %}');"></div>
       				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Wellness Experts</a></h3>
-      					<span class="position">Experienced Data Scientists</span>
+      					<h3><a href="teacher-single.html">Emily Carter</a></h3>
+      					<span class="position">Pediatrician</span>
       					<div class="text">
-	        				<p>Our experts, with deep knowledge in data science, analyze your health data to provide precise risk assessments and tailored recommendations.</p>
+	        				<p>Provides medical care for infants, children, and adolescents, addressing a wide range of physical, emotional, and behavioral health issues. They ensure children's growth and development through routine checkups and treatments.</p>
 	        				<ul class="ftco-social">
 			              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 			              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -326,12 +469,12 @@
         	</div>
         	<div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
         		<div class="staff">
-                   <div class="img mb-4" style="background-image: url('{% static "images/person_8.jpg" %}');"></div>
+                   <div class="img mb-4" style="background-image: url('{% static "images/michael.jpeg" %}');"></div>
       				<div class="info text-center">
-      					<h3><a href="teacher-single.html">Medical Insight Professionals</a></h3>
-      					<span class="position">Innovative Technology Integration</span>
+      					<h3><a href="teacher-single.html">Michael Patel</a></h3>
+      					<span class="position">Gastroenterologist</span>
       					<div class="text">
-	        				<p>Our platform integrates state-of-the-art technology to offer a seamless experience, from risk prediction to personalized treatment recommendations, ensuring you get the best possible care.</p>
+	        				<p>Specializes in the digestive system and related organs, including the stomach, intestines, and liver. They diagnose and treat conditions like ulcers, IBS, Crohn's disease, and liver disorders.</p>
 	        				<ul class="ftco-social">
 			              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 			              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -341,50 +484,9 @@
 	        			</div>
       				</div>
         		</div>
-        	</div>
-        </div>
-        <div class="row  mt-5 justify-conten-center">
-        	<div class="col-md-8 ftco-animate">
-        		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi vero accusantium sunt sit aliquam ipsum molestias autem perferendis, incidunt cumque necessitatibus cum amet cupiditate, ut accusamus. Animi, quo. Laboriosam, laborum.</p>
         	</div>
         </div>
       </div>
-    </section>
-
-		
-		<section class="ftco-gallery">
-    	<div class="container-wrap">
-    		<div class="row no-gutters">
-					<div class="col-md-3 ftco-animate">
-						<a href="#" class="gallery img d-flex align-items-center" style="background-image: url('{% static 'images/gallery-1.jpg' %}');">
-							<div class="icon mb-4 d-flex align-items-center justify-content-center">
-    						<span class="icon-search"></span>
-    					</div>
-						</a>
-					</div>
-					<div class="col-md-3 ftco-animate">
-						<a href="#" class="gallery img d-flex align-items-center" style="background-image: url('{% static 'images/gallery-2.jpg' %}')">
-							<div class="icon mb-4 d-flex align-items-center justify-content-center">
-    						<span class="icon-search"></span>
-    					</div>
-						</a>
-					</div>
-					<div class="col-md-3 ftco-animate">
-						<a href="#" class="gallery img d-flex align-items-center" style="background-image: url('{% static 'images/gallery-3.jpg' %}');">
-							<div class="icon mb-4 d-flex align-items-center justify-content-center">
-    						<span class="icon-search"></span>
-    					</div>
-						</a>
-					</div>
-					<div class="col-md-3 ftco-animate">
-						<a href="#" class="gallery img d-flex align-items-center" style="background-image: url('{% static 'images/ga' %}');">
-							<div class="icon mb-4 d-flex align-items-center justify-content-center">
-    						<span class="icon-search"></span>
-    					</div>
-						</a>
-					</div>
-        </div>
-    	</div>
     </section>
 
 		
@@ -396,7 +498,7 @@
           <div class="col-md-3">
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">HealthPredict.</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <p>Carried on the breeze of personalized care, we lift you toward a horizon of wellness and vitality.</p>
             </div>
             <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
               <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
@@ -422,7 +524,7 @@
               <div class="block-21 mb-4 d-flex">
                 <a class="blog-img mr-4" style="background-image: url('{% static 'images/image_1.jpg' %}');"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                  <h3 class="heading"><a href="#">In a digital age, how can AI help you live your healthiest life?</a></h3>
                   <div class="meta">
                     <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -433,7 +535,7 @@
               <div class="block-21 mb-4 d-flex">
                 <a class="blog-img mr-4" style="background-image: url('{% static 'images/image_2.jpg' %}');"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                  <h3 class="heading"><a href="#">Every health journey is unique, and it starts with the first step—are you ready to take yours?</a></h3>
                   <div class="meta">
                     <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
@@ -449,8 +551,8 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+91 9456342450</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">service@healthpredict.com</span></a></li>
 	              </ul>
 	            </div>
             </div>
@@ -519,7 +621,6 @@
       </div>
     </div>
   </div>
-
 
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>

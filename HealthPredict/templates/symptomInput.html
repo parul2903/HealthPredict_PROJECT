@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker - Symptoms</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+        .form-container {
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .form-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #017cc0;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #016299;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container d-flex justify-content-center">
+    <div class="form-container">
+        <h2 class="form-header text-center">Describe Your Symptoms</h2>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="symptoms">Enter your symptoms (comma-separated):</label>
+                <input type="text" class="form-control" id="symptoms" name="symptoms" placeholder="e.g., fever,cough,fatigue" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Get Results</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

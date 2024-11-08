@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Styles remain the same as in the user profile */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+
+        .sidebar {
+            background-color: #333;
+            width: 250px;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar-nav {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #3498db;
+            padding: 10px 20px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .sidebar-btn i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .sidebar-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            flex-direction: column;
+        }
+
+        .character {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        .user-title {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00c6ff;
+            text-align: center;
+        }
+
+        .container {
+            flex: 1;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .kpi {
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .kpi-value {
+            font-weight: bold;
+            font-size: 2em;
+            color: #007bff;
+            text-align: center;
+        }
+
+        .info-card {
+            background-color: #444;
+            color: white;
+            width: 100%;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .update-data-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0;
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart-card {
+            height: 350px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            height: 300px;
+            width: auto;
+        }
+
+        .pie-chart-canvas {
+            width: 250px;
+            height: 250px;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar with Doctor's Profile -->
+    <div class="sidebar">
+        <div class="header">
+            <img src="https://i.ibb.co/9gRJ0Lk/cat-main-removebg-preview.png" alt="Doctor Image" class="character">
+            <div class="user-title">{{ doctor.name }}'s Dashboard</div>
+        </div>
+
+        <a class="sidebar-btn" id="openModalBtn">
+            <i class="fas fa-edit"></i> Update Profile
+        </a>
+
+        <div class="info-card">
+            <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+        </div>
+        <div class="info-card">
+            <p><strong>Experience:</strong> {{ doctor.experience }} years</p>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li>
+                <a href="{% url 'home' %}" class="sidebar-btn">
+                    <i class="fas fa-home"></i> Go to Home
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'appointments' %}" class="sidebar-btn">
+                    <i class="fas fa-calendar-alt"></i> View Appointments
+                </a>
+            </li>
+            <li>
+                <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div style="flex: 1;">
+        <h1>Doctor Dashboard</h1>
+        <div class="container">
+            <!-- Doctor's Basic Info Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Doctor Details</span>
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <p><strong>Name:</strong> {{ doctor.name }}</p>
+                <p><strong>Email:</strong> {{ doctor.email }}</p>
+                <p><strong>Phone:</strong> {{ doctor.phone }}</p>
+            </div>
+
+            <!-- Upcoming Appointments Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Upcoming Appointments</span>
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <ul>
+                    {% for appointment in upcoming_appointments %}
+                        <li>
+                            <strong>Patient:</strong> {{ appointment.patient }}<br>
+                            <strong>Date:</strong> {{ appointment.date }} at {{ appointment.time }}<br>
+                        </li>
+                    {% empty %}
+                        <p>No upcoming appointments.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

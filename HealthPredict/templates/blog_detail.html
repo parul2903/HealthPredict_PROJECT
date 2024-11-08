@@ -1,0 +1,15 @@
+<!-- blog_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <p><small>by {{ post.author }} on {{ post.pub_date|date:"M d, Y" }}</small></p>
+        <div>{{ post.content }}</div>
+        <a href="{% url 'blog' %}">Back to Blog</a>
+    </div>
+</body>
+</html>

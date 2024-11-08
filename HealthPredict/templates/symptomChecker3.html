@@ -1,0 +1,309 @@
+{% load static %}
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Symptom Checker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+        .form-container {
+            max-width: 500px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .form-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #017cc0;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #016299;
+        }
+        .gender-btn {
+            width: 100px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Health<span>Predict</span></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+	         <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="{% url 'symptomChecker' %}" class="nav-link">Symptom Checker</a></li>
+            <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+            <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link"><span>Login/Register</span></a></li>
+            <!-- <li class="nav-item cta"><a href="{% url 'login' %}" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Login/Register</span></a></li> -->
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+
+
+
+<div class="container d-flex justify-content-center">
+    <div class="form-container">
+        <h2 class="form-header text-center">HealthPredict Symptom Checker</h2>
+        <p class="text-center">Identify possible conditions and treatment related to your symptoms.</p>
+        <hr>
+        <form id="basicDetailsForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Sex</label><br>
+                <button type="button" class="btn btn-outline-primary gender-btn" id="male-btn">Male</button>
+                <button type="button" class="btn btn-outline-secondary gender-btn" id="female-btn">Female</button>
+                <input type="hidden" id="gender" name="gender" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Continue</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('male-btn').addEventListener('click', function() {
+        document.getElementById('gender').value = 'male';
+        this.classList.add('btn-primary');
+        document.getElementById('female-btn').classList.remove('btn-primary');
+    });
+
+    document.getElementById('female-btn').addEventListener('click', function() {
+        document.getElementById('gender').value = 'female';
+        this.classList.add('btn-primary');
+        document.getElementById('male-btn').classList.remove('btn-primary');
+    });
+</script>
+
+
+
+<!-- This is your initial form for age and gender
+<div class="container d-flex justify-content-center">
+    <div class="form-container">
+        <h2 class="form-header text-center">HealthPredict Symptom Checker</h2>
+        <p class="text-center">Identify possible conditions and treatment related to your symptoms.</p>
+        <hr>
+        <form id="basicDetailsForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Sex</label><br>
+                <button type="button" class="btn btn-outline-primary gender-btn" id="male-btn">Male</button>
+                <button type="button" class="btn btn-outline-secondary gender-btn" id="female-btn">Female</button>
+                <input type="hidden" id="gender" name="gender" required>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block" onclick="showSymptomsForm()">Continue</button>
+        </form>
+    </div>
+</div> -->
+
+<!-- After submitting age and gender, the symptoms selection form appears -->
+<!-- <div class="container d-flex justify-content-center" id="symptomsFormContainer" style="display: none;">
+    <div class="form-container">
+        <h2 class="form-header text-center">Choose Your Symptoms</h2>
+        <p class="text-center">Start typing to get suggestions.</p>
+        <hr>
+        <form id="symptomsForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="symptoms">Select Symptoms</label>
+                <input type="text" id="symptomInput" class="form-control" placeholder="Enter your symptom">
+                <ul id="suggestionsList"></ul> <!-- This will show symptom suggestions -->
+            <!-- </div>
+
+            <div class="form-group">
+                <label for="selectedSymptoms">Selected Symptoms</label>
+                <ul id="selectedSymptoms"></ul> <!-- This will display the chosen symptoms -->
+            <!-- </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Get Prediction</button>
+        </form>
+    </div>
+</div> -->
+
+<!-- <script>
+    // Show symptom selection form after basic details submission
+    function showSymptomsForm() {
+        document.getElementById('basicDetailsForm').style.display = 'none';
+        document.getElementById('symptomsFormContainer').style.display = 'block';
+    }
+
+    // Mock symptom suggestions list
+    const symptoms = ['Cough', 'Fever', 'Headache', 'Sore Throat', 'Fatigue', 'Shortness of Breath'];
+
+    const symptomInput = document.getElementById('symptomInput');
+    const suggestionsList = document.getElementById('suggestionsList');
+    const selectedSymptoms = document.getElementById('selectedSymptoms');
+
+    symptomInput.addEventListener('input', function() {
+        let query = symptomInput.value.toLowerCase();
+        suggestionsList.innerHTML = '';
+        if (query) {
+            let suggestions = symptoms.filter(s => s.toLowerCase().includes(query));
+            suggestions.forEach(s => {
+                let li = document.createElement('li');
+                li.textContent = s;
+                li.addEventListener('click', () => {
+                    addSymptom(s);
+                });
+                suggestionsList.appendChild(li);
+            });
+        }
+    });
+
+    // Add selected symptom to the list
+    function addSymptom(symptom) {
+        let li = document.createElement('li');
+        li.textContent = symptom;
+        selectedSymptoms.appendChild(li);
+        suggestionsList.innerHTML = '';
+        symptomInput.value = '';
+    }
+</script> -->
+
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+	<div class="container">
+	  <div class="row mb-5">
+		<div class="col-md-3">
+		  <div class="ftco-footer-widget mb-4">
+			<h2 class="ftco-heading-2">HealthPredict.</h2>
+			<p>Carried on the breeze of personalized care, we lift you toward a horizon of wellness and vitality.</p>
+		  </div>
+		  <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
+			<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+			<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+			<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+		  </ul>
+		</div>
+		<div class="col-md-2">
+		  <div class="ftco-footer-widget mb-4 ml-md-5">
+			<h2 class="ftco-heading-2">Quick Links</h2>
+			<ul class="list-unstyled">
+			  <li><a href="#" class="py-2 d-block">About</a></li>
+			  <li><a href="#" class="py-2 d-block">Features</a></li>
+			  <li><a href="#" class="py-2 d-block">Projects</a></li>
+			  <li><a href="#" class="py-2 d-block">Blog</a></li>
+			  <li><a href="#" class="py-2 d-block">Contact</a></li>
+			</ul>
+		  </div>
+		</div>
+		<div class="col-md-4 pr-md-4">
+		  <div class="ftco-footer-widget mb-4">
+			<h2 class="ftco-heading-2">Recent Blog</h2>
+			<div class="block-21 mb-4 d-flex">
+			  <a class="blog-img mr-4" style="background-image: url('{% static 'images/image_1.jpg' %}');"></a>
+			  <div class="text">
+				<h3 class="heading"><a href="#">In a digital age, how can AI help you live your healthiest life?</a></h3>
+				<div class="meta">
+				  <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
+				  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+				  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+				</div>
+			  </div>
+			</div>
+			<div class="block-21 mb-4 d-flex">
+			  <a class="blog-img mr-4" style="background-image: url('{% static 'images/image_2.jpg' %}');"></a>
+			  <div class="text">
+				<h3 class="heading"><a href="#">Every health journey is unique, and it starts with the first step—are you ready to take yours?</a></h3>
+				<div class="meta">
+				  <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
+				  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+				  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<div class="col-md-3">
+		  <div class="ftco-footer-widget mb-4">
+			  <h2 class="ftco-heading-2">Office</h2>
+			  <div class="block-23 mb-3">
+				<ul>
+				  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+				  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+91 9456342450</span></a></li>
+				  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">service@healthpredict.com</span></a></li>
+				</ul>
+			  </div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-md-12 text-center">
+
+
+		</div>
+	  </div>
+	</div>
+  </footer>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/aos.js' %}"></script>
+<script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+<script src="{% static 'js/scrollax.min.js' %}"></script>
+<script src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false' %}"></script>
+<script src="{% static 'js/google-map.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

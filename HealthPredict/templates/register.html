@@ -3,73 +3,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DentaCare - Register</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPredict - Register</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Main body and background styling */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Curved background shape */
+        .background-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 50% 100px;
+            border-top-right-radius: 50% 100px;
+            z-index: 0;
+        }
+
+        .register-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-form {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .register-form h2 {
+            font-weight: 600;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #6c5ce7;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a4db0;
+        }
+
+        .alternative-options {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .alternative-options a {
+            color: #6c5ce7;
+            text-decoration: none;
+        }
+
+        /* Video styling */
+        .video-container {
+            width: 50%;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px; /* Optional: for rounded corners */
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Health<span>Predict</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="{% url 'doctor' %}" class="nav-link">Doctors</a></li>
-                    <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
-                    <li class="nav-item active"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
-                    <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Make an Appointment</span></a></li>
-                </ul>
+    <!-- Curved Background Shape -->
+    <div class="background-shape"></div>
+
+    <!-- Register Container -->
+    <div class="register-container">
+        <div class="register-form">
+            <h2>Create an Account</h2>
+            <p>Register to get started</p>
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="Your Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn-primary">
+                </div>
+            </form>
+            <div class="alternative-options">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
             </div>
         </div>
-    </nav>
-    <!-- END nav -->
-
-    <section class="ftco-section contact-section ftco-degree-bg">
-        <div class="container">
-            <div class="row d-flex mb-5 contact-info">
-                <div class="col-md-12 mb-4">
-                    <h2 class="h4">Register</h2>
-                </div>
-            </div>
-            <div class="row block-9">
-                <div class="col-md-6 pr-md-5">
-                    <form action="{% url 'register' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Your Username" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
-                        </div>
-                    </form>
-                    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-                </div>
-                <div class="col-md-6">
-                    <img src="{% static 'images/healthcare.jpg' %}" alt="Healthcare" class="img-fluid">
-                </div>
-            </div>
+        <div class="video-container">
+            <video controls autoplay loop muted>
+                <source src="{% static 'videos/catDocvideo.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-    </section>
-
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    </div>
 </body>
 </html>
-
-
