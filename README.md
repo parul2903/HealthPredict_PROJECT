@@ -22,12 +22,14 @@ The healthcare industry increasingly values personalized medicine, which can lea
 4. **Make an Appointment**: Users can book and manage their appointments with healthcare professionals.  
    ![Make an Appointment](readme_images/makeApp.png)  
 
-5. **Interactive Health Dashboard**: Visualizes user health metrics, risk scores, and progress.  
+5. **Interactive Health Dashboard**: Visualizes user health metrics, risk scores, and progress.
+   ![Chatbot](readme_images/dashboard.png)  
 
-6. **Chatbot Support**: Provides interactive assistance to guide users through the platform.
+7. **Chatbot Support**: Provides interactive assistance to guide users through the platform.
    ![Chatbot](readme_images/chatbot.png)  
 
-8. **Contact Form**: Users can reach out for support and additional assistance.  
+8. **Contact Form**: Users can reach out for support and additional assistance.
+   ![Chatbot](readme_images/contact.png) 
 
 ## Project Structure  
 
